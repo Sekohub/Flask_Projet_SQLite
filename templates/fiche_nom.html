@@ -1,0 +1,11 @@
+<h2>Résultat pour "{{ nom }}"</h2>
+
+{% if clients %}
+<ul>
+  {% for client in clients %}
+    <li>{{ client.nom }} – {{ client.email }}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Aucun client trouvé.</p>
+{% endif %}
