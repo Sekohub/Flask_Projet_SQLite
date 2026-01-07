@@ -96,7 +96,7 @@ def login_user():
 
 
 @app.route('/fiche_nom/<nom>')
-def Readfiche(nom):
+def fiche_nom(nom):
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
