@@ -96,24 +96,14 @@ def login_user():
 
 
 @app.route("/fiche_nom/<nom>")
-def fiche_nom(nom):
-
+def Readfiche(nom):
     conn = sqlite3.connect("database.db")
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-
-    cursor.execute(
-        "SELECT * FROM client WHERE nom = ?",
-        (nom,)
-    )
-    clients = cursor.fetchall()
-
+    cursor.execute('SELECT * FROM clients WHERE nom = ?', (nom,))
+    data = cursor.fetchall()
     conn.close()
-
-    return render_template(
-        "fiche_client.html",
-        clients=clients
-    )
+    return render_template('fiche_nom.html', data=data)
 
 
                                                                                                                                     
