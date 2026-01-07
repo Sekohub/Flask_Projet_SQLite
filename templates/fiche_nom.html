@@ -2,39 +2,45 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recherche client par nom</title>
 </head>
 <body>
 
-    <h2>Recherche d'un client par nom</h2>
+<h2>Recherche d'un client par nom</h2>
 
-    <!-- Formulaire de recherche -->
-    <form action="{{ url_for('fiche_nom') }}" method="get">
-        <label for="nom">Nom du client :</label><br>
-        <input type="text" id="nom" name="nom" value="{{ nom | default('') }}"><br><br>
-        <input type="submit" value="Rechercher">
-    </form>
+<form action="{{ url_for('fiche_nom') }}" method="get">
+    <label for="nom">Nom du client :</label><br>
+    <input type="text" id="nom" name="nom" value="{{ nom | default('') }}"><br><br>
+    <input type="submit" value="Rechercher">
+</form>
 
-    <br>
+<br>
 
-    {% if clients is defined %}
-        {% if clients %}
-            <h3>Résultat(s) :</h3>
-            <ul>
-                {% for client in clients %}
-                    <li>
-                        ID : {{ client.id }}<br>
-                        Nom : {{ client.nom }}<br>
-                        Email : {{ client.email }}
-                    </li>
-                    <br>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Aucun client trouvé pour ce nom.</p>
-        {% endif %}
+{% if clients is defined %}
+    {% if clients %}
+        {% for client in clients %}
+            <table border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>Création</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Adresse</th>
+                </tr>
+                <tr>
+                    <td>{{ client.id }}</td>
+                    <td>{{ client.creation }}</td>
+                    <td>{{ client.nom }}</td>
+                    <td>{{ client.prenom }}</td>
+                    <td>{{ client.adresse }}</td>
+                </tr>
+            </table>
+            <br>
+        {% endfor %}
+    {% else %}
+        <p>Aucun client trouvé pour ce nom.</p>
     {% endif %}
+{% endif %}
 
 </body>
 </html>
