@@ -95,17 +95,25 @@ def login_user():
     return render_template("login_user.html", error=error)
 
 
-@app.route('/fiche_nom/<nom>')
-def fiche_nom(nom):
-    conn = sqlite3.connect('database.db')
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM clients WHERE nom = ?', (nom,))
-    data = cursor.fetchall()
-    conn.close()
-    return render_template('fiche_nom.html', data=data)
+@app.route("/fiche_nom/", methods=["GET"])
+def fiche_nom():
+    nom = request.args.get("nom")
+
+    data = None
+    if nom:
+        conn = sqlite3.connect("database.db")
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT * FROM clients WHERE nom = ?",
+            (nom,)
+        )
+        data = cursor.fetchall()
+        conn.close()
+
+    return render_template("fiche_nom.html", data=data, nom=nom)
 
 
-                                                                                                                                    
+                                                                                                                                   
 if __name__ == "__main__":
   app.run(debug=True)
