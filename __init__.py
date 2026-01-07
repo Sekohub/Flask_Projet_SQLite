@@ -77,6 +77,24 @@ def enregistrer_client():
     conn.close()
     return redirect('/consultation/')  # Rediriger vers la page d'accueil après l'enregistrement
 
+
+@app.route("/login_user", methods=["GET", "POST"])
+def login_user():
+    error = False
+
+    if request.method == "POST":
+        login = request.form.get("login")
+        password = request.form.get("password")
+
+        if login == "user" and password == "12345":
+            session["user"] = "user"
+            return redirect(url_for("fiche_nom"))
+        else:
+            error = True
+
+    return render_template("login_user.html", error=error)
+
+
 @app.route("/fiche_nom/", methods=["GET"])
 def fiche_nom():
     if not session.get("user"):
