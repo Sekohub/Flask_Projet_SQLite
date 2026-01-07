@@ -113,6 +113,34 @@ def fiche_nom():
 
     return render_template("fiche_nom.html", data=data, nom=nom)
 
+# PROJET BIBLIOTHEQUE 
+
+@app.route("/api/livres", methods=["GET"])
+def api_livres():
+    conn = sqlite3.connect("database.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT id, titre, auteur, stock FROM livres WHERE stock > 0"
+    )
+    livres = cursor.fetchall()
+
+    conn.close()
+
+    # Conversion en JSON
+    result = []
+    for livre in livres:
+        result.append({
+            "id": livre["id"],
+            "titre": livre["titre"],
+            "auteur": livre["auteur"],
+            "stock": livre["stock"]
+        })
+
+    return jsonify(result)
+
+
 
                                                                                                                                    
 if __name__ == "__main__":
