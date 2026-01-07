@@ -95,9 +95,9 @@ def login_user():
     return render_template("login_user.html", error=error)
 
 
-@app.route("/fiche_nom/<nom>")
+@app.route('/fiche_nom/<nom>')
 def Readfiche(nom):
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM clients WHERE nom = ?', (nom,))
