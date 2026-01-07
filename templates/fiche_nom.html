@@ -8,9 +8,9 @@
 
 <h2>Recherche d'un client par nom</h2>
 
-<form action="{{ url_for('fiche_nom') }}" method="get">
+<form onsubmit="this.action='/fiche_nom/' + document.getElementById('nom').value;">
     <label for="nom">Nom du client :</label><br>
-    <input type="text" id="nom" name="nom" value="{{ nom | default('') }}"><br><br>
+    <input type="text" id="nom" name="nom"><br><br>
     <input type="submit" value="Rechercher">
 </form>
 
