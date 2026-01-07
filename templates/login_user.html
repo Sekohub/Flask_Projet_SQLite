@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Authentification utilisateur</title>
+</head>
+<body>
+
+    <h2>Authentification utilisateur</h2>
+
+    {% if error %}
+        <p style="color:red;">Identifiant ou mot de passe incorrect.</p>
+    {% endif %}
+
+    <form action="{{ url_for('login_user') }}" method="post">
+        <label for="login">Nom d'utilisateur :</label><br>
+        <input type="text" id="login" name="login"><br>
+
+        <label for="password">Mot de passe :</label><br>
+        <input type="password" id="password" name="password"><br><br>
+
+        <input type="submit" value="Se connecter">
+    </form>
+
+</body>
+</html>
