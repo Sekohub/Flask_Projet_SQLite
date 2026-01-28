@@ -122,14 +122,10 @@ def api_livres():
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
-    cursor.execute(
-        "SELECT id, titre, auteur, stock FROM livres WHERE stock > 0"
-    )
+    cursor.execute("SELECT id, titre, auteur, stock FROM livres")
     livres = cursor.fetchall()
-
     conn.close()
 
-    # Conversion en JSON
     result = []
     for livre in livres:
         result.append({
@@ -138,7 +134,8 @@ def api_livres():
             "auteur": livre["auteur"],
             "stock": livre["stock"]
         })
-return jsonify(result)
+
+    return jsonify(result)
 
 @app.route("/livres", methods=["GET"])
 def livres():
