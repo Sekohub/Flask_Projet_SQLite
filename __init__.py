@@ -153,6 +153,26 @@ def livres():
 
     return render_template("livres.html", livres=livres)
 
+# Recherche de livre
+
+@app.route("/api/livres/search", methods=["GET"])
+def api_search_livres():
+    q = request.args.get("q", "")
+
+    conn = sqlite3.connect("database.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT * FROM livres
+        WHERE stock > 0
+        AND (titre LIKE ? OR auteur LIKE ?)
+    """, (f"%{q}%", f"%{q}%"))
+
+    livres = cursor.fetchall()
+    conn.close()
+
+    return jsonify([dict(livre) for livre in livres])
 
 
                                                                                                                                    
