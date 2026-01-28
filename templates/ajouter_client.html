@@ -12,7 +12,11 @@
             <div class="form-group">
                 {{ form.prenom.label }} {{ form.prenom(class="form-control") }}
             </div>
-            {{ form.submit(class="btn btn-primary") }}
+            <div class="form-group">
+                {{ form.adresse.label }} {{ form.adresse(class="form-control") }}
+            </div>
+            
+                {{ form.submit(class="btn btn-primary") }}
         </form>
         <div class="col-sm-3"></div>
     </div>
