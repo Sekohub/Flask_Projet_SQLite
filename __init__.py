@@ -14,7 +14,16 @@ def est_authentifie():
 
 @app.route("/")
 def home():
-    return redirect(url_for("livres"))
+    conn = sqlite3.connect("database.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM livres")
+    livres = cursor.fetchall()
+
+    conn.close()
+
+    return render_template("livres.html", livres=livres)
 
 @app.route('/lecture')
 def lecture():
