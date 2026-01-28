@@ -207,6 +207,8 @@ def api_search_livres():
 
 @app.route("/api/emprunter/", methods=["POST"])
 def emprunter_livre():
+    if not current_user_id():
+        return redirect(url_for("login_user"))
     livre_id = request.form.get("livre_id")
     client_id = request.form.get("client_id")
 
