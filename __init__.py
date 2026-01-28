@@ -96,9 +96,20 @@ def login_user():
         login = request.form.get("login")
         password = request.form.get("password")
 
-        if login == "user" and password == "12345":
-            session["user"] = "user"
-            return redirect(url_for("fiche_nom"))
+        conn = sqlite3.connect("database.db")
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "SELECT id, role FROM users WHERE login = ? AND password = ?",
+            (login, password)
+        )
+        user = cursor.fetchone()
+        conn.close()
+
+        if user:
+            session["user_id"] = user[0]   # 🔥 ID utilisateur
+            session["role"] = user[1]      # user / admin
+            return redirect(url_for("livres"))
         else:
             error = True
 
