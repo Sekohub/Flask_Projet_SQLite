@@ -184,6 +184,5 @@ def api_search_livres():
     return jsonify([dict(livre) for livre in livres])
 
 
-                                                                                                                                   
 if __name__ == "__main__":
     app.run(debug=True)
