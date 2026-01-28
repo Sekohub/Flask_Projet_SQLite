@@ -187,29 +187,30 @@ def emprunter_livre():
     livre_id = request.form.get("livre_id")
     client_id = request.form.get("client_id")
 
-    conn = sqlite3.connect("database.db")
-    cursor = conn.cursor()
+    print("DEBUG livre_id =", livre_id)
+    print("DEBUG client_id =", client_id)
 
-    cursor.execute("SELECT stock FROM livres WHERE id = ?", (livre_id,))
-    livre = cursor.fetchone()
+    try:
+        conn = sqlite3.connect("database.db")
+        cursor = conn.cursor()
 
-    if not livre or livre[0] <= 0:
+        cursor.execute(
+            "INSERT INTO emprunts (livre_id, client_id) VALUES (?, ?)",
+            (livre_id, client_id)
+        )
+
+        cursor.execute(
+            "UPDATE livres SET stock = stock - 1 WHERE id = ?",
+            (livre_id,)
+        )
+
+        conn.commit()
         conn.close()
+
         return redirect(url_for("livres"))
 
-    cursor.execute(
-        "INSERT INTO emprunts (livre_id, client_id) VALUES (?, ?)",
-        (livre_id, client_id)
-    )
-    cursor.execute(
-        "UPDATE livres SET stock = stock - 1 WHERE id = ?",
-        (livre_id,)
-    )
-
-    conn.commit()
-    conn.close()
-
-    return redirect(url_for("livres"))
+    except Exception as e:
+        return f"ERREUR SQL : {e}", 500
 
 if __name__ == "__main__":
     app.run(debug=True)
