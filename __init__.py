@@ -140,18 +140,27 @@ def api_livres():
         })
 return jsonify(result)
 
-@app.route("/livres")
+@app.route("/livres", methods=["GET"])
 def livres():
+    q = request.args.get("q", "")
+
     conn = sqlite3.connect("database.db")
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM livres")
-    livres = cursor.fetchall()
+    if q:
+        cursor.execute("""
+            SELECT * FROM livres
+            WHERE stock > 0
+            AND (titre LIKE ? OR auteur LIKE ?)
+        """, (f"%{q}%", f"%{q}%"))
+    else:
+        cursor.execute("SELECT * FROM livres WHERE stock > 0")
 
+    livres = cursor.fetchall()
     conn.close()
 
-    return render_template("livres.html", livres=livres)
+    return render_template("livres.html", livres=livres, q=q)
 
 # Recherche de livre
 
