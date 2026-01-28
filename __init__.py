@@ -212,5 +212,31 @@ def emprunter_livre():
 
     return redirect(url_for("livres"))
 
+@app.route("/livres/ajouter", methods=["GET", "POST"])
+def ajouter_livre():
+    if request.method == "POST":
+        titre = request.form.get("titre")
+        auteur = request.form.get("auteur")
+        stock = request.form.get("stock")
+
+        if not titre or not auteur or not stock:
+            return "Champs manquants", 400
+
+        conn = sqlite3.connect("database.db")
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)",
+            (titre, auteur, int(stock))
+        )
+
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("livres"))
+
+    # GET → afficher le formulaire
+    return render_template("ajouter_livre.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
