@@ -12,6 +12,9 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'  # Clé secrète pour les sessions
 def est_authentifie():
     return session.get('authentifie')
 
+def current_user_id():
+    return session.get("user_id")
+
 @app.route("/")
 def home():
     conn = sqlite3.connect("database.db")
