@@ -138,11 +138,23 @@ def api_livres():
             "auteur": livre["auteur"],
             "stock": livre["stock"]
         })
+return jsonify(result)
 
-    return jsonify(result)
+@app.route("/livres")
+def livres():
+    conn = sqlite3.connect("database.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM livres")
+    livres = cursor.fetchall()
+
+    conn.close()
+
+    return render_template("livres.html", livres=livres)
 
 
 
                                                                                                                                    
 if __name__ == "__main__":
-  app.run(debug=True)
+app.run(debug=True)
