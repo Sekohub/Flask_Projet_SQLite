@@ -27,10 +27,8 @@ CREATE TABLE users (
 DROP TABLE IF EXISTS emprunts;
 CREATE TABLE emprunts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
     livre_id INTEGER NOT NULL,
-    date_emprunt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    date_retour TIMESTAMP,
-    FOREIGN KEY(user_id) REFERENCES users(id),
-    FOREIGN KEY(livre_id) REFERENCES livres(id)
+    client_id INTEGER NOT NULL,
+    date_emprunt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date_retour TIMESTAMP
 );
