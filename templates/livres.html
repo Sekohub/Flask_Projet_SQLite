@@ -11,12 +11,7 @@
     <input type="text" id="q" name="q" value="{{ q | default('') }}">
     <input type="submit" value="Rechercher">
 </form>
-
-<form action="/api/emprunter" method="post">
-    <input type="hidden" name="livre_id" value="{{ livre.id }}">
-    <input type="hidden" name="client_id" value="1">
-    <input type="submit" value="Emprunter">
-</form>
+    
 
 <br>
 
