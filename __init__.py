@@ -180,6 +180,48 @@ def api_search_livres():
 
     return jsonify([dict(livre) for livre in livres])
 
+# Emprunter un livre 
+
+@app.route("/api/emprunter", methods=["POST"])
+def emprunter_livre():
+    livre_id = request.form.get("livre_id")
+    client_id = request.form.get("client_id")
+
+    if not livre_id or not client_id:
+        return jsonify({"error": "Paramètres manquants"}), 400
+
+    conn = sqlite3.connect("database.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    # Vérifier le stock
+    cursor.execute(
+        "SELECT stock FROM livres WHERE id = ?",
+        (livre_id,)
+    )
+    livre = cursor.fetchone()
+
+    if not livre or livre["stock"] <= 0:
+        conn.close()
+        return jsonify({"error": "Livre indisponible"}), 400
+
+    # Enregistrer l'emprunt
+    cursor.execute(
+        "INSERT INTO emprunts (livre_id, client_id) VALUES (?, ?)",
+        (livre_id, client_id)
+    )
+
+    # Mettre à jour le stock
+    cursor.execute(
+        "UPDATE livres SET stock = stock - 1 WHERE id = ?",
+        (livre_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Livre emprunté avec succès"})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
