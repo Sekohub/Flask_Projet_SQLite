@@ -35,6 +35,11 @@ cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("L'in
 cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("C pour les nuls", "Dan Gookin", 5))
 cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("Le Silmarillon", "Tolkien", 3))
 cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("Là où chantent les écrevisses", "Newman", 6))
+cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("1984", "Orwell", 9))
+cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("Le petit prince", "Saint-Exupéry", 14))
+cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("Le rouge et le noir", "Stendhal", 6))
+cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("Da Vinci Code", "Dan Brown", 6))
+cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("La promesse de l'aube", "Romain Gary", 6))
 
 connection.commit()
 connection.close()
