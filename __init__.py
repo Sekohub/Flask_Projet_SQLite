@@ -66,6 +66,7 @@ def formulaire_client():
 def enregistrer_client():
     nom = request.form['nom']
     prenom = request.form['prenom']
+    adresse = request.form['adresse']
 
     # Connexion à la base de données
     conn = sqlite3.connect('database.db')
