@@ -23,33 +23,18 @@ cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('LEFE
 # =========================
 # USERS
 # =========================
-cur.execute(
-    "INSERT INTO users (login, password, role) VALUES (?, ?, ?)",
-    ("admin", "admin123", "admin")
-)
-
-cur.execute(
-    "INSERT INTO users (login, password, role) VALUES (?, ?, ?)",
-    ("user", "12345", "user")
-)
+cur.execute("INSERT INTO users (login, password, role) VALUES (?, ?, ?)", ("admin", "admin123", "admin"))
+cur.execute("INSERT INTO users (login, password, role) VALUES (?, ?, ?)", ("user", "12345", "user"))
 
 # =========================
 # LIVRES
 # =========================
-cur.execute(
-    "INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)",
-    ("Python pour les nuls", "Dupont", 3)
-)
-
-cur.execute(
-    "INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)",
-    ("Flask avancé", "Martin", 2)
-)
-
-cur.execute(
-    "INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)",
-    ("SQL simplement", "Durand", 1)
-)
+cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("Python pour les nuls", "Dupont", 3))
+cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("Le Dit du Genji", "Murasaki", 2))
+cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("L'interprétation du rêve", "Freud", 1))
+cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("C pour les nuls", "Dan Gookin", 5))
+cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("Le Silmarillon", "Tolkien", 3))
+cur.execute("INSERT INTO livres (titre, auteur, stock) VALUES (?, ?, ?)", ("Là où chantent les écrevisses", "Newman", 6))
 
 connection.commit()
 connection.close()
