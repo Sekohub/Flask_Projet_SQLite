@@ -2,28 +2,30 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Liste des livres</title>
+    <title>Bibliothèque – Liste des livres</title>
 </head>
 <body>
 
+<h2>Rechercher un livre</h2>
+
 <form method="get" action="{{ url_for('livres') }}">
-    <label for="q">Rechercher un livre :</label><br>
+    <label for="q">Titre ou auteur :</label><br>
     <input type="text" id="q" name="q" value="{{ q | default('') }}">
     <input type="submit" value="Rechercher">
 </form>
-    
 
 <br>
 
 <h2>Liste des livres</h2>
 
 {% if livres %}
-<table border="1">
+<table border="1" cellpadding="5">
     <tr>
         <th>ID</th>
         <th>Titre</th>
         <th>Auteur</th>
         <th>Stock</th>
+        <th>Action</th>
     </tr>
 
     {% for livre in livres %}
@@ -32,11 +34,22 @@
         <td>{{ livre.titre }}</td>
         <td>{{ livre.auteur }}</td>
         <td>{{ livre.stock }}</td>
+        <td>
+            {% if livre.stock > 0 %}
+                <form action="{{ url_for('emprunter_livre') }}" method="post" style="margin:0;">
+                    <input type="hidden" name="livre_id" value="{{ livre.id }}">
+                    <input type="hidden" name="client_id" value="1">
+                    <input type="submit" value="Emprunter">
+                </form>
+            {% else %}
+                ❌ Indisponible
+            {% endif %}
+        </td>
     </tr>
     {% endfor %}
 </table>
 {% else %}
-<p>Aucun livre disponible.</p>
+<p>Aucun livre trouvé.</p>
 {% endif %}
 
 </body>
