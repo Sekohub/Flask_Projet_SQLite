@@ -251,7 +251,7 @@ def emprunter_livre():
 
 @app.route("/api/restituer", methods=["POST"])
 def restituer_livre():
-    client_id = current_user_id()
+    client_id = current_client_id()
     emprunt_id = request.form.get("emprunt_id")
 
     if not client_id:
