@@ -24,10 +24,10 @@
         <td>{{ e.titre }}</td>
         <td>{{ e.auteur }}</td>
         <td>
-            <form method="post" action="{{ url_for('restituer_livre') }}">
-                <input type="hidden" name="livre_id" value="{{ e.livre_id }}">
-                <button type="submit">Restituer</button>
-            </form>
+        <form method="post" action="{{ url_for('restituer_livre') }}">
+            <input type="hidden" name="emprunt_id" value="{{ e.emprunt_id }}">
+            <button type="submit">Restituer</button>
+        </form>
         </td>
     </tr>
     {% endfor %}
