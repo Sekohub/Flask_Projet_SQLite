@@ -307,7 +307,6 @@ def mes_emprunts():
     cursor.execute("""
         SELECT 
             e.id AS emprunt_id,
-            l.id AS livre_id,
             l.titre,
             l.auteur
         FROM emprunts e
@@ -319,6 +318,7 @@ def mes_emprunts():
     conn.close()
 
     return render_template("mes_emprunts.html", emprunts=emprunts)
+
 
 
 # Ajouter des livres à la liste 
