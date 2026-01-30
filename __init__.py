@@ -210,16 +210,16 @@ def api_search_livres():
 
 @app.route("/api/emprunter", methods=["POST"])
 def emprunter_livre():
-    user_id = current_user_id()
+    client_id = current_client_id()
     livre_id = request.form.get("livre_id")
 
-    if not user_id:
+    if not client_id:
         return redirect(url_for("login_user"))
 
     conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
-    # vérifier stock
+    # Vérifier le stock
     cursor.execute(
         "SELECT stock FROM livres WHERE id = ?",
         (livre_id,)
@@ -230,13 +230,13 @@ def emprunter_livre():
         conn.close()
         return "Livre indisponible", 400
 
-    # enregistrer l’emprunt
+    # Enregistrer l’emprunt
     cursor.execute(
-        "INSERT INTO emprunts (livre_id, user_id) VALUES (?, ?)",
-        (livre_id, user_id)
+        "INSERT INTO emprunts (livre_id, client_id) VALUES (?, ?)",
+        (livre_id, client_id)
     )
 
-    # diminuer le stock
+    # Diminuer le stock
     cursor.execute(
         "UPDATE livres SET stock = stock - 1 WHERE id = ?",
         (livre_id,)
@@ -247,6 +247,7 @@ def emprunter_livre():
 
     return redirect(url_for("livres"))
 
+# Ajouter des livres à la liste 
 
 @app.route("/livres/ajouter", methods=["GET", "POST"])
 def ajouter_livre():
