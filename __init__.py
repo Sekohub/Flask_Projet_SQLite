@@ -110,13 +110,15 @@ def login_user():
         conn.close()
 
         if user:
-            session["user_id"] = user[0]   # 🔥 ID utilisateur
+            session["user_id"] = user[0]   # ID utilisateur
             session["role"] = user[1]      # user / admin
+            session["login"] = login       # ✅ AJOUT ICI
             return redirect(url_for("livres"))
         else:
             error = True
 
     return render_template("login_user.html", error=error)
+
 
 
 @app.route("/fiche_nom/", methods=["GET"])
