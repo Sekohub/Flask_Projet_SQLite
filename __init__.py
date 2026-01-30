@@ -247,6 +247,50 @@ def emprunter_livre():
 
     return redirect(url_for("livres"))
 
+# Restiuer un livre emprunté 
+
+@app.route("/api/restituer", methods=["POST"])
+def restituer_livre():
+    client_id = current_user_id()
+    emprunt_id = request.form.get("emprunt_id")
+
+    if not client_id:
+        return redirect(url_for("login_user"))
+
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    # récupérer le livre lié à l’emprunt
+    cursor.execute(
+        "SELECT livre_id FROM emprunts WHERE id = ? AND client_id = ?",
+        (emprunt_id, client_id)
+    )
+    row = cursor.fetchone()
+
+    if not row:
+        conn.close()
+        return "Emprunt introuvable", 404
+
+    livre_id = row[0]
+
+    # supprimer l’emprunt
+    cursor.execute(
+        "DELETE FROM emprunts WHERE id = ?",
+        (emprunt_id,)
+    )
+
+    # remettre le stock
+    cursor.execute(
+        "UPDATE livres SET stock = stock + 1 WHERE id = ?",
+        (livre_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("mes_emprunts"))
+
+
 # Consulter ses emprunts 
 
 @app.route("/mes_emprunts")
