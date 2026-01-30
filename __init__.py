@@ -162,6 +162,9 @@ def api_livres():
 
 @app.route("/livres", methods=["GET"])
 def livres():
+    if not current_user_id():
+    return redirect(url_for("login_user"))
+    
     q = request.args.get("q", "")
 
     conn = sqlite3.connect("database.db")
