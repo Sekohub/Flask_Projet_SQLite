@@ -247,6 +247,36 @@ def emprunter_livre():
 
     return redirect(url_for("livres"))
 
+# Consulter ses emprunts 
+
+@app.route("/mes_emprunts")
+def mes_emprunts():
+    client_id = current_client_id()
+
+    if not client_id:
+        return redirect(url_for("login_user"))
+
+    conn = sqlite3.connect("database.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT 
+            e.id AS emprunt_id,
+            l.id AS livre_id,
+            l.titre,
+            l.auteur
+        FROM emprunts e
+        JOIN livres l ON l.id = e.livre_id
+        WHERE e.client_id = ?
+    """, (client_id,))
+
+    emprunts = cursor.fetchall()
+    conn.close()
+
+    return render_template("mes_emprunts.html", emprunts=emprunts)
+
+
 # Ajouter des livres à la liste 
 
 @app.route("/livres/ajouter", methods=["GET", "POST"])
