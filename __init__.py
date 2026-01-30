@@ -119,6 +119,12 @@ def login_user():
 
     return render_template("login_user.html", error=error)
 
+# Se deconnecter 
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login_user"))
 
 
 @app.route("/fiche_nom/", methods=["GET"])
