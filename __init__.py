@@ -162,7 +162,7 @@ def api_livres():
 
 @app.route("/livres", methods=["GET"])
 def livres():
-    if not current_user_id():
+    if not current_client_id():
         return redirect(url_for("login_user"))
     
     q = request.args.get("q", "")
