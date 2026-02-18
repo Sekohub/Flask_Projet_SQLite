@@ -359,3 +359,8 @@ def ajouter_livre():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+from task_app import task_app
+app.register_blueprint(new_app, url_prefix="/new")
+
+
